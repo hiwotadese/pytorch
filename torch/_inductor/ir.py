@@ -4153,7 +4153,7 @@ class IndexPutFallback(ExternKernel):
 class DeviceCopy(ExternKernelOut):
     @classmethod
     def create(cls, x, device):
-        if not x.is_extern() and all(
+        if not x.is_extern() and not config.split_const_graph and all(
             (r.name in V.graph.constants and isinstance(r, dependencies.MemoryDep))
             for r in x.get_reads()
         ):
